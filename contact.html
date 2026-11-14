@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Liên hệ Shoes Zone">
+  <title>Liên Hệ | Shoes Zone</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="asset/style.css">
+</head>
+<body>
+  
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="index.html">
+        <i class="fa-solid fa-person-running text-danger"></i><i class="fa-solid fa-fire text-danger me-2"></i>Shoes Zone
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">Giới thiệu</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold" href="contact.html">Liên hệ</a></li>
+          <li class="nav-item">
+            <a class="btn btn-outline-danger position-relative" href="cart.html">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="bg-light py-2 border-bottom">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 small">
+          <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-secondary">Trang chủ</a></li>
+          <li class="breadcrumb-item active text-danger fw-bold" aria-current="page">Liên hệ</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <main class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Liên Hệ Với Chúng Tôi</h2>
+        <p class="text-muted">Shoes Zone luôn sẵn sàng lắng nghe và giải đáp mọi thắc mắc của bạn.</p>
+      </div>
+
+      <div class="row g-5">
+        <!-- Cột thông tin liên hệ -->
+        <div class="col-lg-5">
+          <div class="card border-0 shadow-sm p-4 bg-light h-100">
+            <h4 class="fw-bold mb-4 text-danger">Thông Tin Cửa Hàng</h4>
+            
+            <div class="d-flex align-items-start mb-3">
+              <i class="fa-solid fa-location-dot text-danger fs-4 me-3 mt-1"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Địa chỉ:</h6>
+                <p class="text-muted small mb-0">123 Đường Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start mb-3">
+              <i class="fa-solid fa-phone text-danger fs-4 me-3 mt-1"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Điện thoại / Hotline:</h6>
+                <p class="text-muted small mb-0">0909 123 456 - (028) 38 111 222</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start mb-3">
+              <i class="fa-solid fa-envelope text-danger fs-4 me-3 mt-1"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Email:</h6>
+                <p class="text-muted small mb-0">support@shoeszone.com</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start">
+              <i class="fa-solid fa-clock text-danger fs-4 me-3 mt-1"></i>
+              <div>
+                <h6 class="fw-bold mb-1">Giờ làm việc:</h6>
+                <p class="text-muted small mb-0">08:00 - 21:30 (Từ Thứ 2 đến Chủ Nhật)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột Form phản hồi -->
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-sm p-4">
+            <h4 class="fw-bold mb-4">Gửi Tin Nhắn Phản Hồi</h4>
+            <form id="contactForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="name" class="form-label fw-semibold">Họ và tên *</label>
+                  <input type="text" class="form-control" id="name" placeholder="Ví dụ: Nguyễn Văn A" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label fw-semibold">Địa chỉ Email *</label>
+                  <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                </div>
+                <div class="col-12">
+                  <label for="subject" class="form-label fw-semibold">Tiêu đề</label>
+                  <input type="text" class="form-control" id="subject" placeholder="Cần tư vấn chọn size, thắc mắc đơn hàng...">
+                </div>
+                <div class="col-12">
+                  <label for="message" class="form-label fw-semibold">Nội dung tin nhắn *</label>
+                  <textarea class="form-control" id="message" rows="4" placeholder="Nhập chi tiết nội dung bạn cần hỗ trợ..." required></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-danger btn-lg px-4 fw-bold">Gửi Phản Hồi</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer bg-dark text-white py-5">
+    <div class="container text-center">
+      <p class="small mb-0 text-secondary">© 2026 Shoes Zone. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

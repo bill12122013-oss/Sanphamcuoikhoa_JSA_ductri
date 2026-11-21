@@ -1,151 +1,117 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const products = [
-    {
-      id: 1,
-      name: "Shoes Zone Running Pro",
-      desc: "Giày chạy bộ thoáng khí",
-      price: 1250000,
-      image: "assets/Running shoes.avif",
-      badge: "HOT",
-    },
-    {
-      id: 2,
-      name: "Sneaker Streetwear Red",
-      desc: "Phong cách năng động",
-      price: 990000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-81ztc-mokqa2092gb3ad",
-      badge: "",
-    },
-    {
-      id: 3,
-      name: "Basketball Star High",
-      desc: "Giày bóng rổ cổ cao",
-      price: 1480000,
-      image: "https://static.ftshp.digital/img/p/5/5/6/4/1/7/556417-thickbox.jpg",
-      badge: "-20%",
-    },
-    {
-      id: 4,
-      name: "Daily Walk Classic",
-      desc: "Giày đi học, đi làm êm chân",
-      price: 750000,
-      image: "assets/Daily Walk Classic.png",
-      badge: "",
-    },
-  ];
+"use strict";
 
-  updateCartCount();
-  renderProducts(products);
-});
+// BƯỚC 3: File này chỉ nạp trên products.html, sau config.js và api.js.
+const productList = document.querySelector("#product-list");
+const productSearch = document.querySelector("#product-search");
+const productStatus = document.querySelector("#product-status");
+const retryButton = document.querySelector("#retry-products");
+const cartMessage = document.querySelector("#cart-message");
+let products = [];
+let isLoading = false;
 
-function escapeHtml(value = "") {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+function formatPrice(value) {
+  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value);
 }
 
-function renderProducts(productsArray) {
-  const productListContainer = document.getElementById("product-list");
-  if (!productListContainer) return;
-
-  const html = productsArray
-    .map((product) => {
-      const badgeClass = product.badge === "-20%" ? "bg-warning text-dark" : "bg-danger";
-      const safeName = escapeHtml(product.name);
-      const safeDesc = escapeHtml(product.desc);
-      const safeImage = escapeHtml(product.image);
-
-      return `
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden position-relative">
-            ${product.badge ? `<span class="badge ${badgeClass} position-absolute top-0 start-0 m-2" style="z-index: 2;">${product.badge}</span>` : ""}
-            <img src="${safeImage}" class="card-img-top bg-light p-3" alt="${safeName}" style="height: 200px; object-fit: cover;">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title h6 fw-bold">${safeName}</h5>
-              <p class="text-secondary small mb-2">${safeDesc}</p>
-
-              <div class="mb-3 mt-auto">
-                <label class="form-label small text-muted mb-1">Chọn Size:</label>
-                <select class="form-select form-select-sm size-select" id="size-${product.id}">
-                  <option value="39">Size 39</option>
-                  <option value="40" selected>Size 40</option>
-                  <option value="41">Size 41</option>
-                  <option value="42">Size 42</option>
-                </select>
-              </div>
-
-              <div class="mt-auto">
-                <div class="fw-bold text-danger mb-2">${product.price.toLocaleString("vi-VN")} đ</div>
-                <button class="btn btn-outline-danger w-100 btn-sm add-to-cart-btn" data-id="${product.id}" data-name="${encodeURIComponent(product.name)}" data-price="${product.price}" data-image="${encodeURIComponent(product.image)}">
-                  <i class="fa-solid fa-cart-plus me-1"></i>Thêm giỏ hàng
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    })
-    .join("");
-
-  productListContainer.innerHTML = html;
-
-  document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const id = Number(button.dataset.id);
-      const name = decodeURIComponent(button.dataset.name || "");
-      const price = Number(button.dataset.price || 0);
-      const image = decodeURIComponent(button.dataset.image || "");
-      addToCart(id, name, price, image);
-    });
-  });
+// BƯỚC 4: Một object -> một card. template là khung HTML ẩn trong products.html.
+function createProductCard(product) {
+  const card = document.querySelector("#product-card-template").content.cloneNode(true);
+  const image = card.querySelector("img");
+  image.src = product.image || "Cuoikhoaweb/assets/giay_trangchu.png";
+  image.alt = product.name;
+  image.addEventListener("error", () => { image.src = "Cuoikhoaweb/assets/giay_trangchu.png"; }, { once: true });
+  // Không ghép dữ liệu bên ngoài vào innerHTML: tên/mô tả được điền bằng textContent.
+  card.querySelector(".product-title").textContent = product.name;
+  card.querySelector(".product-description").textContent = product.desc;
+  card.querySelector(".product-price").textContent = formatPrice(product.price);
+  card.querySelector(".product-stock").textContent = `Tồn kho mẫu: ${product.stock}`;
+  const select = card.querySelector(".size-select");
+  select.id = `size-${product.id}`;
+  card.querySelector("label").htmlFor = select.id;
+  const button = card.querySelector(".add-to-cart-btn");
+  button.disabled = product.stock < 1;
+  button.addEventListener("click", () => addToCart(product, select.value));
+  card.querySelector(".product-detail-link").href = `product-detail.html?id=${encodeURIComponent(product.id)}`;
+  return card;
 }
 
-window.addToCart = function (id, name, price, image) {
-  const sizeSelect = document.getElementById(`size-${id}`);
-  const selectedSize = sizeSelect ? sizeSelect.value : "40";
+// BƯỚC 5: Tìm trên mảng đã tải; không gọi API theo từng ký tự.
+function renderProducts() {
+  const keyword = productSearch.value.trim().toLowerCase();
+  const result = products.filter(product => product.name.toLowerCase().includes(keyword));
+  productList.replaceChildren();
+  result.forEach(product => productList.append(createProductCard(product)));
+  productStatus.className = "text-secondary mb-3";
+  productStatus.textContent = result.length ? `Hiển thị ${result.length} mẫu giày` : "Không tìm thấy giày phù hợp.";
+  // TODO HS 03: Thêm select sắp xếp giá trên mảng result, không sửa mảng products gốc.
+}
 
-  let cart = [];
+// BƯỚC 6: Nối fetch -> render, có trạng thái đang tải và lỗi/thử lại.
+async function loadProducts() {
+  if (isLoading) return;
+  isLoading = true;
+  productSearch.disabled = true;
+  retryButton.hidden = true;
+  productList.setAttribute("aria-busy", "true");
+  productStatus.className = "text-secondary mb-3";
+  productStatus.textContent = "Đang tải giày...";
   try {
-    cart = JSON.parse(localStorage.getItem("shoesZoneCart")) || [];
+    products = await fetchProducts();
+    renderProducts();
+    productSearch.disabled = false;
   } catch (error) {
-    cart = [];
+    productList.replaceChildren();
+    productStatus.className = "alert alert-danger";
+    productStatus.textContent = `${error.message} Hãy kiểm tra kết nối và thử lại.`;
+    retryButton.hidden = false;
+  } finally {
+    isLoading = false;
+    productList.setAttribute("aria-busy", "false");
   }
+}
 
-  const existingIndex = cart.findIndex((item) => item.id === id && item.size === selectedSize);
-
-  if (existingIndex > -1) {
-    cart[existingIndex].quantity += 1;
-  } else {
-    cart.push({
-      id: id,
-      name: name,
-      price: price,
-      image: image,
-      size: selectedSize,
-      quantity: 1,
-    });
-  }
-
-  localStorage.setItem("shoesZoneCart", JSON.stringify(cart));
-  updateCartCount();
-
-  alert(`Đã thêm "${name}" (Size ${selectedSize}) vào giỏ hàng thành công!`);
-};
+// Giữ luồng localStorage đã có của học sinh và cấu trúc mà JS/cart.js đang đọc.
+function readProductCart() {
+  try {
+    const cart = JSON.parse(localStorage.getItem("shoesZoneCart") || "[]");
+    return Array.isArray(cart) ? cart : [];
+  } catch { return []; }
+}
 
 function updateCartCount() {
-  let cart = [];
-  try {
-    cart = JSON.parse(localStorage.getItem("shoesZoneCart")) || [];
-  } catch (error) {
-    cart = [];
-  }
-
-  const totalCount = cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-  const cartCountEl = document.getElementById("cart-count");
-  if (cartCountEl) {
-    cartCountEl.textContent = totalCount;
-  }
+  const cart = readProductCart();
+  document.querySelector("#cart-count").textContent = cart.reduce((sum, item) => sum + (Number(item?.quantity) || 0), 0);
 }
+
+function addToCart(product, size) {
+  cartMessage.className = "text-danger mb-3";
+  if (!["39", "40", "41", "42"].includes(size)) {
+    cartMessage.textContent = "Vui lòng chọn size hợp lệ.";
+    return;
+  }
+  const cart = readProductCart();
+  const item = cart.find(item => item?.id === product.id && item.size === size);
+  // Kiểm tra tổng số lượng của cùng một mẫu giày, kể cả các size khác nhau.
+  const total = cart.filter(item => item?.id === product.id).reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+  if (total >= product.stock) {
+    cartMessage.textContent = "Số lượng trong giỏ đã đạt tồn kho mẫu của sản phẩm.";
+    return;
+  }
+  if (item) item.quantity = (Number(item.quantity) || 0) + 1;
+  else cart.push({ id: product.id, name: product.name, image: product.image, price: product.price, size, quantity: 1 });
+  try {
+    localStorage.setItem("shoesZoneCart", JSON.stringify(cart));
+    updateCartCount();
+    cartMessage.className = "text-success mb-3";
+    cartMessage.textContent = `Đã thêm ${product.name}, size ${size}, vào giỏ.`;
+  } catch { cartMessage.textContent = "Không lưu được giỏ hàng. Kiểm tra quyền Local Storage của trình duyệt."; }
+}
+
+productSearch.addEventListener("input", renderProducts);
+retryButton.addEventListener("click", loadProducts);
+window.addEventListener("storage", updateCartCount);
+updateCartCount();
+loadProducts();
+
+// TODO HS 05: Giỏ/checkout cần đọc lại giá, tên và stock từ API theo ID.
+// Size 39-42 chỉ là lựa chọn DEMO; DummyJSON không trả tồn kho theo size.

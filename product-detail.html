@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Thông tin chi tiết sản phẩm Shoes Zone">
+  <title>Chi tiết sản phẩm | Shoes Zone</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="index.html">
+        <i class="fa-solid fa-person-running text-danger"></i><i class="fa-solid fa-fire text-danger me-2"></i>Shoes Zone
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Mở menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">Giới thiệu</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+          <li class="nav-item">
+            <a class="btn btn-outline-danger position-relative" href="cart.html" aria-label="Giỏ hàng">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="page-header py-4 border-bottom">
+      <div class="container">
+        <a href="products.html" class="text-danger fw-semibold">← Quay lại sản phẩm</a>
+        <h1 class="fw-bold mt-2 mb-0">Chi tiết sản phẩm</h1>
+      </div>
+    </section>
+    <section class="py-5">
+      <div class="container">
+        <p id="detail-status" class="text-secondary mb-3" role="status" aria-live="polite">Đang tải sản phẩm...</p>
+        <button id="retry-detail" class="btn btn-outline-danger mb-3" type="button" hidden>Thử lại</button>
+        <article id="detail-content" class="row g-4 align-items-center" hidden>
+          <div class="col-md-6">
+            <img id="detail-image" class="img-fluid rounded product-image w-100" alt="">
+          </div>
+          <div class="col-md-6">
+            <h2 id="detail-name" class="fw-bold"></h2>
+            <p id="detail-price" class="text-danger fw-bold fs-3"></p>
+            <p id="detail-description" class="text-secondary"></p>
+            <p id="detail-stock" class="small text-secondary"></p>
+            <label for="detail-size" class="form-label">Chọn size</label>
+            <select id="detail-size" class="form-select mb-3" aria-label="Chọn size">
+              <option value="38">38</option>
+              <option value="39">39</option>
+              <option value="40" selected>40</option>
+              <option value="41">41</option>
+              <option value="42">42</option>
+              <option value="43">43</option>
+            </select>
+            <button id="detail-add-to-cart" class="btn btn-danger" type="button">Thêm vào giỏ</button>
+            <p id="detail-cart-message" class="mt-3 mb-0" role="status" aria-live="polite"></p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer bg-dark text-white mt-5 py-5">
+    <div class="container text-center">
+      <p class="small mb-0 text-secondary">© 2026 Shoes Zone. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="JS/config.js" defer></script>
+  <script src="JS/api.js" defer></script>
+  <script src="JS/product-detail.js" defer></script>
+</body>
+</html>

@@ -10,3 +10,24 @@
   background: #f8f9fa;
 }
 
+
+/* UI cơ bản dùng chung, không thay framework Bootstrap. */
+body { font-family: "Poppins", Arial, sans-serif; color: #202632; min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1; }
+a { text-decoration: none; }
+.page-header { background: #f6f7f9; }
+.navbar-brand { font-size: 1.15rem; }
+.navbar-nav { row-gap: .5rem; }
+.catalog-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.25rem; }
+.catalog-search { flex: 1 1 250px; max-width: 440px; }
+.product-card { border: 1px solid #e6e8ec; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px #20263208; }
+.product-image { height: 220px; object-fit: contain; padding: 18px; background: #f7f8fa; }
+.product-title, .product-description { overflow-wrap: anywhere; }
+.product-description { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.checkout-contact-card { border-radius: 1rem; }
+.checkout-contact-icon { display: inline-grid; flex: 0 0 2.75rem; width: 2.75rem; height: 2.75rem; place-items: center; border-radius: 50%; background: #fff1f2; color: #dc3545; }
+.checkout-contact-icon-sm { flex-basis: 2.25rem; width: 2.25rem; height: 2.25rem; font-size: .85rem; }
+.site-footer a, .site-footer .text-secondary { color: #c7ced7 !important; }
+[hidden] { display: none !important; }
+@media(max-width:991.98px) { .navbar-collapse { padding-top: 1rem; } }
+@media(max-width:575.98px) { .display-4 { font-size: 2.2rem; } .navbar-brand { font-size: 1rem; } }

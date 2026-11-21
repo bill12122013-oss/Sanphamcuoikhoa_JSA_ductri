@@ -38,12 +38,12 @@
               <p class="text-secondary small">Chào mừng bạn quay lại với Shoes Zone</p>
             </div>
 
-            <form id="loginForm">
+            <p class="small text-secondary">Tài khoản demo trên trình duyệt; không dùng mật khẩu thật.</p><form id="loginForm">
               <div class="mb-3">
-                <label class="form-label fw-semibold small">Email hoặc Tên đăng nhập</label>
+                <label class="form-label fw-semibold small">Email</label>
                 <div class="input-group">
                   <span class="input-group-text bg-light"><i class="fa-solid fa-user text-muted"></i></span>
-                  <input type="text" class="form-control" id="loginEmail" required placeholder="Nhập email của bạn">
+                  <input type="email" class="form-control" id="loginEmail" autocomplete="username" required placeholder="Nhập email của bạn">
                 </div>
               </div>
 
@@ -51,23 +51,15 @@
                 <label class="form-label fw-semibold small">Mật khẩu</label>
                 <div class="input-group">
                   <span class="input-group-text bg-light"><i class="fa-solid fa-key text-muted"></i></span>
-                  <input type="password" class="form-control" id="loginPassword" required placeholder="Nhập mật khẩu">
+                  <input type="password" class="form-control" id="loginPassword" autocomplete="current-password" required placeholder="Nhập mật khẩu">
                 </div>
               </div>
 
-              <div class="d-flex justify-content-between align-items-center mb-4 small">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="rememberMe">
-                  <label class="form-check-label text-secondary" for="rememberMe">Nhớ mật khẩu</label>
-                </div>
-                <a href="#" class="text-decoration-none text-danger">Quên mật khẩu?</a>
-              </div>
-
+              <!-- TODO HS: Chỉ thêm ghi nhớ/quên mật khẩu khi có xử lý. -->
               <button type="submit" class="btn btn-danger w-100 fw-bold py-2 mb-3">Đăng Nhập</button>
             </form>
-
             <div class="text-center small">
-              <span class="text-secondary">Chưa có tài khoản?</span> 
+              <span class="text-secondary">Chưa có tài khoản?</span>
               <a href="register.html" class="text-danger fw-semibold text-decoration-none">Đăng ký ngay</a>
             </div>
           </div>

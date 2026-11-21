@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="asset/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   
@@ -21,7 +21,7 @@
       <a class="navbar-brand fw-bold text-primary" href="index.html">
         <i class="fa-solid fa-person-running text-danger"></i><i class="fa-solid fa-fire text-danger me-2"></i>Shoes Zone
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Mở menu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mainMenu">
@@ -36,7 +36,7 @@
               <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
             </a>
           </li>
-        </ul>
+        <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li></ul>
       </div>
     </div>
   </nav>
@@ -49,13 +49,13 @@
           <span class="badge bg-danger text-uppercase px-3 py-2 mb-3">Bộ sưu tập 2026</span>
           <h1 class="display-4 fw-bold mb-3">Bứt Phá Mọi Giới Hạn Cùng <span class="text-danger">Shoes Zone</span></h1>
           <p class="lead text-secondary mb-4">Khám phá các dòng giày chạy bộ, tập gym và thời trang đa năng mang lại sự êm ái tối đa cho từng bước chân của bạn.</p>
-          <div class="d-flex gap-3">
+          <div class="d-flex flex-wrap gap-3">
             <a href="products.html" class="btn btn-danger btn-lg px-4 fw-bold">Xem Sản Phẩm</a>
             <a href="contact.html" class="btn btn-outline-dark btn-lg px-4 fw-bold">Liên Hệ</a>
           </div>
         </div>
         <div class="col-lg-6 text-center">
-          <img src="https://c8.alamy.com/comp/2BH7EWM/shop-display-of-a-lot-of-sports-shoes-on-a-wall-a-view-of-a-wall-of-shoes-inside-the-store-modern-new-stylish-sneakers-running-shoes-for-men-and-wom-2BH7EWM.jpg" alt="Shoes Zone Hero" class="img-fluid" style="max-height: 380px;">
+          <img src="Cuoikhoaweb/assets/giay_trangchu.png" alt="Shoes Zone Hero" class="img-fluid" style="max-height: 380px;">
         </div>
       </div>
     </div>
@@ -96,64 +96,26 @@
       <div class="d-flex justify-content-between align-items-end mb-4">
         <div>
           <h2 class="fw-bold mb-1">Sản Phẩm Nổi Bật</h2>
-          <p class="text-muted small mb-0">Những mẫu giày hot nhất được săn đón hiện tại</p>
+          <p class="text-muted small mb-0">Một vài mẫu giày từ bộ sưu tập Shoes Zone</p>
         </div>
         <a href="products.html" class="text-danger fw-bold text-decoration-none">Xem tất cả <i class="fa-solid fa-arrow-right"></i></a>
       </div>
 
-      <div class="row g-4">
-        <!-- Card 1 -->
+      <p id="home-product-status" class="text-secondary mb-3" role="status" aria-live="polite">Đang tải sản phẩm...</p>
+      <button id="retry-home-products" class="btn btn-outline-danger mb-3" type="button" hidden>Thử lại</button>
+      <div id="home-product-list" class="row g-4" aria-busy="true"></div>
+      <template id="home-product-card-template">
         <div class="col-6 col-md-4 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm">
-            <span class="badge bg-danger position-absolute top-0 start-0 m-2">HOT</span>
-            <img src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1750775735-nike-zoom-fly-6-1000px-685ab7abc25ca.jpg?crop=1xw:1xh;center,top&resize=980:*" class="card-img-top p-3" alt="Marathon Runner X" style="height: 180px; object-fit: contain;">
+          <article class="card product-card h-100 border-0 shadow-sm">
+            <img class="card-img-top product-image" alt="" loading="lazy">
             <div class="card-body d-flex flex-column">
-              <h6 class="card-title fw-bold">Marathon Runner X</h6>
-              <p class="text-danger fw-bold mb-3">2.350.000 đ</p>
-              <a href="product-detail9.html" class="btn btn-outline-danger btn-sm mt-auto w-100 fw-bold">Xem Chi Tiết</a>
+              <h3 class="product-title h6 fw-bold"></h3>
+              <p class="product-price text-danger fw-bold mb-3"></p>
+              <a class="btn btn-outline-danger btn-sm mt-auto w-100 fw-bold product-detail-link" href="product-detail.html">Xem chi tiết</a>
             </div>
-          </div>
+          </article>
         </div>
-
-        <!-- Card 2 -->
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm">
-            <span class="badge bg-danger position-absolute top-0 start-0 m-3 px-3 py-2 fs-6">HOT</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6fPask5uc9UfdKv3EVWsin0HIEQ1NAUG8i2LQNhWGfQ&s" class="card-img-top p-3" alt="Retro Style 1990" style="height: 180px; object-fit: contain;">
-            <div class="card-body d-flex flex-column">
-              <h6 class="card-title fw-bold">Speed Runner Pro</h6>
-              <p class="text-danger fw-bold mb-3">1.250.000 đ</p>
-              <a href="product-detail1.html" class="btn btn-outline-danger btn-sm mt-auto w-100 fw-bold">Xem Chi Tiết</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm">
-            <span class="badge bg-success position-absolute top-0 start-0 m-2">MỚI</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1rlnMEejQp66rF--FZhz_-NcXldHIEYOP4eAAFSkofxBJmaz1R6sQFGI&s=10" class="card-img-top p-3" alt="Training Flex Knit" style="height: 180px; object-fit: contain;">
-            <div class="card-body d-flex flex-column">
-              <h6 class="card-title fw-bold">Air Speed Ultra</h6>
-              <p class="text-danger fw-bold mb-3"> 1.650.000 đ</p>
-              <a href="product-detail5.html" class="btn btn-outline-danger btn-sm mt-auto w-100 fw-bold">Xem Chi Tiết</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="card h-100 border-0 shadow-sm">
-            <span class="badge bg-success position-absolute top-0 start-0 m-2">MỚI</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVB4lV0MAIvDjzYWBCBLpShltCypRrR8bubWJ7Wp7oGXlE562NBDliIY4&s=10" class="card-img-top p-3" alt="Court Tennis Master" style="height: 180px; object-fit: contain;">
-            <div class="card-body d-flex flex-column">
-              <h6 class="card-title fw-bold">Court Tennis Master</h6>
-              <p class="text-danger fw-bold mb-3">1.790.000 đ</p>
-              <a href="product-detail12.html" class="btn btn-outline-danger btn-sm mt-auto w-100 fw-bold">Xem Chi Tiết</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </template>
     </div>
   </section>
 
@@ -165,6 +127,9 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="JS/config.js" defer></script>
+  <script src="JS/api.js" defer></script>
+  <script src="JS/home.js" defer></script>
 
 </body>
 </html>

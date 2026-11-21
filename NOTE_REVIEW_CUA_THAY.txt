@@ -1,0 +1,86 @@
+GHI CHÚ REVIEW VÀ BÀN GIAO — SHOES ZONE
+
+Mục tiêu: sửa UI cơ bản, làm mẫu fetch/render một trang và giữ lại phần bài tập để học sinh tự làm. Tiêu chí hoàn thiện: dữ liệu sản phẩm phải lấy từ API, không giữ mảng hardcode hoặc nhiều trang chi tiết tĩnh.
+
+1. FILE ĐÃ REVIEW VÀ SỬA
+
+products.html
+- Làm khung danh sách API, template card, tìm tên, loading/lỗi/thử lại.
+- Giữ chọn size và thêm giỏ vốn có; ghi rõ giá quy đổi và size demo.
+- Nạp config.js -> api.js -> product.js; bỏ select sắp xếp chưa có xử lý để học sinh tự bổ sung.
+
+JS/product.js
+- Thay mảng 4 sản phẩm hardcode bằng fetchProducts().
+- Có comment từng bước, render DOM bằng textContent, ảnh dự phòng và tìm tên.
+- Giữ key shoesZoneCart/cấu trúc giỏ cũ; gộp theo ID và size, kiểm tra tồn kho mẫu và báo lỗi khi không lưu được.
+
+style.css
+- Bổ sung UI dùng chung: font, khoảng cách, card, ảnh contain, màu footer, menu mobile, input tìm kiếm.
+
+index.html
+- Sửa đường dẫn CSS, link chi tiết trỏ tới file không có và thay hero bằng ảnh cục bộ có sẵn.
+- Các nút chi tiết cũ tạm chuyển thành Xem bộ sưu tập, không dựng trang chi tiết giả.
+- Thêm đường vào đăng nhập, bổ sung nhãn menu và cho nút hero xuống dòng trên mobile.
+- Nội dung sản phẩm nổi bật vẫn tĩnh để học sinh tự chuyển sang API.
+
+about.html, contact.html, main.html, trangchu.html
+- Sửa đường dẫn CSS sai, thêm đường vào đăng nhập trên menu.
+- Bỏ script assets/js/main.js không tồn tại ở các trang có tham chiếu.
+- Trang liên hệ chưa được viết xử lý form. main.html/trangchu.html là bản cũ/trùng cần học sinh quyết định dọn sau.
+
+cart.html
+- Bổ sung đường vào đăng nhập trên menu; chưa viết lại luồng giỏ.
+
+login.html
+- Nhãn Email khớp logic đăng nhập theo email, dùng type=email/autocomplete.
+- Bỏ ghi nhớ/quên mật khẩu chưa có chức năng; ghi rõ tài khoản demo.
+
+2. FILE MỚI
+
+JS/config.js — URL, danh mục mens-shoes, giới hạn số lượng và hệ số quy đổi giá demo.
+JS/api.js — fetchProducts(), kiểm tra HTTP/JSON và normalizeProduct() dùng chung.
+HUONG_DAN_BAT_DAU.md — thứ tự học và checklist làm tiếp.
+NOTE_REVIEW_CUA_THAY.txt — ghi chú bàn giao này.
+product-detail.html, JS/product-detail.js — trang chi tiết dùng chung, fetch theo ID API và giữ định dạng giỏ hàng.
+JS/home.js — render sản phẩm nổi bật trên trang chủ từ cùng API.
+
+3. ĐÃ ĐỌC NHƯNG CHƯA NÂNG CẤP LOGIC
+
+JS/cart.js — có render giỏ/checkout và thao tác số lượng; cần kiểm tra kiểu dữ liệu localStorage, stock từ API, render an toàn, phí giao hàng và validate checkout.
+JS/register.js — đã có email, mật khẩu/xác nhận và trùng tài khoản; cần kiểm tra cấu trúc storage và tên, mật khẩu hiện lưu dạng rõ trong demo.
+JS/login.js — có đăng nhập và lưu phiên không chứa mật khẩu; cần kiểm tra cấu trúc tài khoản đọc từ storage.
+JS/profile.js — có đọc phiên/đăng xuất; tên/email đang ghép vào innerHTML, cần chuyển sang textContent.
+checkout.html, register.html, profile.html — đọc để hiểu luồng, chưa làm lại toàn bộ giao diện/chức năng.
+
+4. VIỆC CẦN LÀM TIẾP THEO THỨ TỰ
+
+[ ] Hiểu config -> API -> normalize -> render; kiểm tra request trong Network.
+[ ] Tự thêm sắp xếp giá và chuyển danh mục giày nam/nữ.
+[x] Tạo một product-detail.html dùng chung, fetch /products/{id}; không tạo hàng loạt trang tĩnh.
+[x] Tạo home.js để render trang chủ cùng API, bỏ các sản phẩm hardcode.
+[ ] Xóa main.html/trangchu.html nếu xác định là bản trùng khi hoàn thiện; không cần redirect URL cũ.
+[ ] Giỏ đọc lại tên/ảnh/giá/stock theo ID API; kiểm tra số lượng và dữ liệu storage.
+[ ] Thống nhất giá và phí vận chuyển từ danh sách đến checkout, ghi rõ hệ số giá demo.
+[ ] Validate checkout/liên hệ; hiện lỗi dễ hiểu, chỉ xóa giỏ sau khi xác nhận demo thành công.
+[ ] Hoàn thiện tài khoản/profile, hiện tên trên menu, đăng xuất và render an toàn.
+[ ] Kiểm tra desktop/mobile, mất mạng, ảnh hỏng, link và Console trước khi nộp.
+
+5. LƯU Ý KHI TIẾP TỤC
+
+- DummyJSON là dữ liệu mẫu, không phải tồn kho/giá cửa hàng thật.
+- Giá đang quy đổi bằng hệ số minh họa 25.000 VND/USD, không phải tỷ giá hiện hành.
+- Size 39–42 do website đặt để học; API không trả stock theo size.
+- Ba key cũ: shoesZoneCart, shoesZoneUsers, shoesZoneUser. Không tạo thêm key trùng chức năng.
+- Có thể xóa các món giỏ demo cũ trước khi tự kiểm tra API; không trộn dữ liệu sản phẩm hardcode vào bản hoàn thiện.
+- Đọc HUONG_DAN_BAT_DAU.md để lần theo code và tiêu chí từng bước.
+
+6. PHẦN ĐÃ KIỂM TRA
+
+- Endpoint giày nam trả HTTP 200 và header CORS cho localhost, không dùng API key.
+- Cú pháp ba file JS cấu hình/API/render hợp lệ.
+- Kiểm tra DOM mô phỏng với dữ liệu API thực: card, giá quy đổi, tìm kiếm và không có kết quả.
+- Thêm giỏ giữ đúng size; gộp cùng ID/size, tách size khác, cập nhật badge và chặn vượt tồn kho mẫu.
+- Lỗi mạng, nút thử lại và phản hồi sai cấu trúc được kiểm tra bằng dữ liệu mô phỏng.
+- Form đăng nhập vẫn có nút submit, link đăng ký và input email.
+- Rà đường dẫn nội bộ HTML: không còn tham chiếu file cục bộ không tồn tại.
+- Chưa kiểm tra trực quan trong trình duyệt; học sinh cần kiểm tra mobile/desktop và toàn bộ luồng trước khi nộp.
